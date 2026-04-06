@@ -30,7 +30,9 @@
 
 #include <linux/can.h>
 
-#define NRAI_FT
+#ifndef  NRAI_FT
+#define  NRAI_FT
+#endif //NRAI)FT
 
 enum{
         NRAI_CAN_ID_NMT                         = 0,
@@ -553,6 +555,14 @@ struct nrai_can_ai_read {
         uint8_t  Acc_StartFastCalib;            // 24|1@1+  (1,0)    [0|1]
 };
 
+/*
+ * The following funcitons ALL unpack the data from the CAN frame corresponding 
+ * to their name into the nrai_can_ai_read struct.
+ * All functions return:
+ *      -1 on error
+ *       0 on success
+ * On error the struct nrai_can_ai_read AND the can_frame are not modified.
+ */
 NRAI_FT int32_t nrai_can_unpack_VCU2AI_Status           (struct nrai_can_ai_read *, struct can_frame *);
 NRAI_FT int32_t nrai_can_unpack_VCU2AI_Steer            (struct nrai_can_ai_read *, struct can_frame *);
 NRAI_FT int32_t nrai_can_unpack_VCU2AI_Speeds           (struct nrai_can_ai_read *, struct can_frame *);
