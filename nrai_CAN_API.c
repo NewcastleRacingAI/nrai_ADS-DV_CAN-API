@@ -220,108 +220,269 @@ nrai_can_unpack_L3GD20_Rotation_B(struct nrai_can_ai_read * s, struct can_frame 
 NRAI_FT int32_t
 nrai_can_unpack_GPS_Status(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_GPS_Status)
+                return -1;
+
+        s->GPS_AntennaStatus    = f->data[0];
+        s->GPS_NumSatellites    = f->data[1];
+        s->GPS_NavigationMethod = f->data[2];
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_GPS_CourseSpeed(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_GPS_CourseSpeed)
+                return -1;
+
+        s->GPS_Course   = ((uint32_t)f->data[3] << 24) | 
+                                       ((uint32_t)f->data[2] << 16) |
+                                       ((uint16_t)f->data[1] << 8) | f->data[0];
+
+        s->GPS_Speed    = ((uint32_t)f->data[7] << 24) | 
+                                       ((uint32_t)f->data[6] << 16) |
+                                       ((uint16_t)f->data[5] << 8) | f->data[4];
+
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_GPS_PositionLongitude(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_GPS_PositionLongitude)
+                return -1;
+
+        s->GPS_Longitude_Minutes = ((uint32_t)f->data[3] << 24) | 
+                                       ((uint32_t)f->data[2] << 16) |
+                                       ((uint16_t)f->data[1] << 8) | f->data[0];
+        s->GPS_Longitude_Degree  = ((uint16_t)f->data[5] << 8) | f->data[4];
+        s->GPS_IndicatorEW       = f->data[6];
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_GPS_PositionLatitude(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_GPS_PositionLatitude)
+                return -1;
+
+        s->GPS_Latitude_Minutes = ((uint32_t)f->data[3] << 24) | 
+                                       ((uint32_t)f->data[2] << 16) |
+                                       ((uint16_t)f->data[1] << 8) | f->data[0];
+        s->GPS_Latitude_Degree  = ((uint16_t)f->data[5] << 8) | f->data[4];
+        s->GPS_IndicatorNS      = f->data[6];
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_GPS_PositionAltitude(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_GPS_PositionAltitude)
+                return -1;
+
+        s->GPS_Altitude = ((uint32_t)f->data[3] << 24) | 
+                                       ((uint32_t)f->data[2] << 16) |
+                                       ((uint16_t)f->data[1] << 8) | f->data[0];
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_GPS_Delusions_A(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_GPS_Delusions_A)
+                return -1;
+
+        s->GPS_PDOP = ((uint32_t)f->data[3] << 24) | 
+                                       ((uint32_t)f->data[2] << 16) |
+                                       ((uint16_t)f->data[1] << 8) | f->data[0];
+
+        s->GPS_HDOP = ((uint32_t)f->data[7] << 24) | 
+                                       ((uint32_t)f->data[6] << 16) |
+                                       ((uint16_t)f->data[5] << 8) | f->data[4];
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_GPS_Delusions_B(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_GPS_Delusions_B)
+                return -1;
+
+        s->GPS_VDOP = ((uint32_t)f->data[3] << 24) | 
+                                       ((uint32_t)f->data[2] << 16) |
+                                       ((uint16_t)f->data[1] << 8) | f->data[0];
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_GPS_DateTime(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_GPS_DateTime)
+                return -1;
+
+        s->UTC_Year       = f->data[0];
+        s->UTC_Month      = f->data[1];
+        s->UTC_DayOfMonth = f->data[2];
+        s->UTC_Hour       = f->data[3];
+        s->UTC_Minute     = f->data[4];
+        s->UTC_Second     = f->data[5];
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_IO(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_IO)
+                return -1;
+
+        s->Din1_Status     = (f->data[0] & 0b00000001);
+        s->Din2_Status     = (f->data[0] & 0b00000010);
+        s->Dout_Status     = (f->data[0] & 0b00000100);
+        s->SD_Present      = (f->data[0] & 0b00001000);
+        s->GPS_PowerStatus = (f->data[0] & 0b00010000);
+        s->Device_ID       = (f->data[0] & 0b11100000);
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_RTC_DateTime(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_RTC_DateTime)
+                return -1;
+
+        s->RTC_Sec        = f->data[0];
+        s->RTC_Min        = f->data[1];
+        s->RTC_Hour       = f->data[2];
+        s->RTC_DayOfWeek  = f->data[3];
+        s->RTC_DayOfMonth = f->data[4];
+        s->RTC_Month      = f->data[5];
+        s->RTC_Year       = ((uint16_t)f->data[7] << 8) | f->data[6];
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_Out_IO(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_Out_IO)
+                return -1;
+
+        s->Dout_Set     = (f->data[0] & 0b00000001);
+        s->GPS_SetPower = (f->data[0] & 0b00000010);
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_Out_PowerOff(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_Out_PowerOff)
+                return -1;
+
+        s->Device_PowerOff = (f->data[0] & 0b00000001);
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_Out_Gyro(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_Out_Gyro)
+                return -1;
+
+        s->Gyro_SetScale = (f->data[0] & 0b00000011);
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_Out_BMC_AccScale(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_Out_BMC_AccScale)
+                return -1;
+
+        s->Acc_SetScale = (f->data[0] & 0b00000111);
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_Out_SaveConfig(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_Out_SaveConfig)
+                return -1;
+
+        s->Config_SaveToEEPROM = (f->data[0] & 0b00000001);
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_Out_RTC_SetTime(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_Out_RTC_SetTime)
+                return -1;
+
+        s->RTC_SetSec        = f->data[0];
+        s->RTC_SetMin        = f->data[1];
+        s->RTC_SetHour        = f->data[2];
+        s->RTC_SetDayOfWeek  = f->data[3];
+        s->RTC_SetDayOfMonth = f->data[4];
+        s->RTC_SetMonth      = f->data[5];
+        s->RTC_SetYear       = ((uint16_t)f->data[7] << 8) | f->data[6];
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_Out_RTC_TimeFromGPS(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_Out_RTC_TimeFromGPS)
+                return -1;
+
+        s->RTC_SetTimeFromGPS = (f->data[0] & 0b00000001);
         return 0;
 }
 
 NRAI_FT int32_t
 nrai_can_unpack_Out_Acc_FastCalibration(struct nrai_can_ai_read * s, struct can_frame * f)
 {
+        if ((s == NULL) || (f == NULL))
+                return -1;
+        if (f->can_id != NRAI_CAN_ID_Out_Acc_FastCalibration)
+                return -1;
+
+        s->Acc_SetCalibTarget_X = (f->data[0] & 0b00000011);
+        s->Acc_SetCalibTarget_Y = (f->data[1] & 0b00000011);
+        s->Acc_SetCalibTarget_Z = (f->data[2] & 0b00000011);
+        s->Acc_StartFastCalib   = (f->data[3] & 0b00000001);
         return 0;
 }
 
