@@ -18,14 +18,16 @@
 
 #include "nrai_CAN_API.h"
 
-#define CLAMP(_value,_min,_max)                                                \
-        do {                                                                   \
-                if (_value < _min){                                            \
-                        _value = _min;                                         \
-                } else if (_value > _max){                                     \
-                        _value =_max;                                          \
-                }                                                              \
-        } while(0)
+static inline int32_t
+CLAMP(int32_t value, int32_t min, int32_t max)
+{
+        if (value < min){
+                return min;
+        } else if (value > max){
+                return max;
+        }
+        return value;
+}
 
 NRAI_FT int32_t
 nrai_can_unpack_VCU2AI_Status(struct nrai_can_ai_read * s, struct can_frame * f)
@@ -194,10 +196,10 @@ nrai_can_unpack_L3GD20_Rotation_A(struct nrai_can_ai_read * s, struct can_frame 
         if (f->can_id != NRAI_CAN_ID_L3GD20_Rotation_A)
                 return -1;
 
-        s->Rotation_X = ((uint32_t)f->data[3] << 24) | 
+        s->Rotation_X = ((uint32_t)f->data[3] << 24) |
                                        ((uint32_t)f->data[2] << 16) |
                                        ((uint16_t)f->data[1] << 8) | f->data[0];
-        s->Rotation_Y = ((uint32_t)f->data[7] << 24) | 
+        s->Rotation_Y = ((uint32_t)f->data[7] << 24) |
                                        ((uint32_t)f->data[6] << 16) |
                                        ((uint16_t)f->data[5] << 8) | f->data[4];
         return 0;
@@ -211,7 +213,7 @@ nrai_can_unpack_L3GD20_Rotation_B(struct nrai_can_ai_read * s, struct can_frame 
         if (f->can_id != NRAI_CAN_ID_L3GD20_Rotation_A)
                 return -1;
 
-        s->Rotation_Z = ((uint32_t)f->data[3] << 24) | 
+        s->Rotation_Z = ((uint32_t)f->data[3] << 24) |
                                        ((uint32_t)f->data[2] << 16) |
                                        ((uint16_t)f->data[1] << 8) | f->data[0];
         return 0;
@@ -239,11 +241,11 @@ nrai_can_unpack_GPS_CourseSpeed(struct nrai_can_ai_read * s, struct can_frame * 
         if (f->can_id != NRAI_CAN_ID_GPS_CourseSpeed)
                 return -1;
 
-        s->GPS_Course   = ((uint32_t)f->data[3] << 24) | 
+        s->GPS_Course   = ((uint32_t)f->data[3] << 24) |
                                        ((uint32_t)f->data[2] << 16) |
                                        ((uint16_t)f->data[1] << 8) | f->data[0];
 
-        s->GPS_Speed    = ((uint32_t)f->data[7] << 24) | 
+        s->GPS_Speed    = ((uint32_t)f->data[7] << 24) |
                                        ((uint32_t)f->data[6] << 16) |
                                        ((uint16_t)f->data[5] << 8) | f->data[4];
 
@@ -258,7 +260,7 @@ nrai_can_unpack_GPS_PositionLongitude(struct nrai_can_ai_read * s, struct can_fr
         if (f->can_id != NRAI_CAN_ID_GPS_PositionLongitude)
                 return -1;
 
-        s->GPS_Longitude_Minutes = ((uint32_t)f->data[3] << 24) | 
+        s->GPS_Longitude_Minutes = ((uint32_t)f->data[3] << 24) |
                                        ((uint32_t)f->data[2] << 16) |
                                        ((uint16_t)f->data[1] << 8) | f->data[0];
         s->GPS_Longitude_Degree  = ((uint16_t)f->data[5] << 8) | f->data[4];
@@ -274,7 +276,7 @@ nrai_can_unpack_GPS_PositionLatitude(struct nrai_can_ai_read * s, struct can_fra
         if (f->can_id != NRAI_CAN_ID_GPS_PositionLatitude)
                 return -1;
 
-        s->GPS_Latitude_Minutes = ((uint32_t)f->data[3] << 24) | 
+        s->GPS_Latitude_Minutes = ((uint32_t)f->data[3] << 24) |
                                        ((uint32_t)f->data[2] << 16) |
                                        ((uint16_t)f->data[1] << 8) | f->data[0];
         s->GPS_Latitude_Degree  = ((uint16_t)f->data[5] << 8) | f->data[4];
@@ -290,7 +292,7 @@ nrai_can_unpack_GPS_PositionAltitude(struct nrai_can_ai_read * s, struct can_fra
         if (f->can_id != NRAI_CAN_ID_GPS_PositionAltitude)
                 return -1;
 
-        s->GPS_Altitude = ((uint32_t)f->data[3] << 24) | 
+        s->GPS_Altitude = ((uint32_t)f->data[3] << 24) |
                                        ((uint32_t)f->data[2] << 16) |
                                        ((uint16_t)f->data[1] << 8) | f->data[0];
         return 0;
@@ -304,11 +306,11 @@ nrai_can_unpack_GPS_Delusions_A(struct nrai_can_ai_read * s, struct can_frame * 
         if (f->can_id != NRAI_CAN_ID_GPS_Delusions_A)
                 return -1;
 
-        s->GPS_PDOP = ((uint32_t)f->data[3] << 24) | 
+        s->GPS_PDOP = ((uint32_t)f->data[3] << 24) |
                                        ((uint32_t)f->data[2] << 16) |
                                        ((uint16_t)f->data[1] << 8) | f->data[0];
 
-        s->GPS_HDOP = ((uint32_t)f->data[7] << 24) | 
+        s->GPS_HDOP = ((uint32_t)f->data[7] << 24) |
                                        ((uint32_t)f->data[6] << 16) |
                                        ((uint16_t)f->data[5] << 8) | f->data[4];
         return 0;
@@ -322,7 +324,7 @@ nrai_can_unpack_GPS_Delusions_B(struct nrai_can_ai_read * s, struct can_frame * 
         if (f->can_id != NRAI_CAN_ID_GPS_Delusions_B)
                 return -1;
 
-        s->GPS_VDOP = ((uint32_t)f->data[3] << 24) | 
+        s->GPS_VDOP = ((uint32_t)f->data[3] << 24) |
                                        ((uint32_t)f->data[2] << 16) |
                                        ((uint16_t)f->data[1] << 8) | f->data[0];
         return 0;
@@ -522,7 +524,7 @@ nrai_can_mkframe_AI2VCU_Steer(  struct nrai_can_ai_write * s, struct can_frame *
         f->len = 2;
 
         tmp = s->STEER_REQUEST;
-        CLAMP(tmp,-210,210);
+        tmp = CLAMP(tmp,-210,210);
 
         f->data[0] =            (tmp       & 0x00FF);
         f->data[1] = (((uint16_t)tmp >> 8) & 0x00FF);
@@ -540,11 +542,11 @@ nrai_can_mkframe_AI2VCU_Brake(struct nrai_can_ai_write * s, struct can_frame * f
         f->len = 2;
 
         tmp = s->HYD_PRESS_F_REQ_pct;
-        CLAMP(tmp,0,100);
+        tmp = CLAMP(tmp,0,100);
         f->data[0] = tmp;
 
         tmp = s->HYD_PRESS_R_REQ_pct;
-        CLAMP(tmp,0,100);
+        tmp = CLAMP(tmp,0,100);
         f->data[1] = tmp;
         return 0;
 }
@@ -560,12 +562,12 @@ nrai_can_mkframe_AI2VCU_Drive_F(struct nrai_can_ai_write * s, struct can_frame *
         f->len = 4;
 
         tmp = s->FRONT_AXLE_TRQ_REQUEST;
-        CLAMP(tmp,0,1950);
+        tmp = CLAMP(tmp,0,1950);
         f->data[0] =  (tmp       & 0xFF);
         f->data[1] = ((tmp >> 8) & 0xFF);
 
         tmp = s->FRONT_MOTOR_SPEED_MAX;
-        CLAMP(tmp,0,4000);
+        tmp = CLAMP(tmp,0,4000);
         f->data[2] = (tmp        & 0xFF);
         f->data[3] = ((tmp >> 8) & 0xFF);
         return 0;
@@ -582,12 +584,12 @@ nrai_can_mkframe_AI2VCU_Drive_R(struct nrai_can_ai_write * s, struct can_frame *
         f->len = 4;
 
         tmp = s->REAR_AXLE_TRQ_REQUEST;
-        CLAMP(tmp,0,1950);
+        tmp = CLAMP(tmp,0,1950);
         f->data[0] =  (tmp       & 0xFF);
         f->data[1] = ((tmp >> 8) & 0xFF);
 
         tmp = s->REAR_MOTOR_SPEED_MAX;
-        CLAMP(tmp,0,4000);
+        tmp = CLAMP(tmp,0,4000);
         f->data[2] = (tmp        & 0xFF);
         f->data[3] = ((tmp >> 8) & 0xFF);
         return 0;
