@@ -210,7 +210,7 @@ nrai_can_unpack_L3GD20_Rotation_B(struct nrai_can_ai_read * s, struct can_frame 
 {
         if ((s == NULL) || (f == NULL))
                 return -1;
-        if (f->can_id != NRAI_CAN_ID_L3GD20_Rotation_A)
+        if (f->can_id != NRAI_CAN_ID_L3GD20_Rotation_B)
                 return -1;
 
         s->Rotation_Z = ((uint32_t)f->data[3] << 24) |
@@ -356,11 +356,11 @@ nrai_can_unpack_IO(struct nrai_can_ai_read * s, struct can_frame * f)
                 return -1;
 
         s->Din1_Status     = (f->data[0] & 0b00000001);
-        s->Din2_Status     = (f->data[0] & 0b00000010);
-        s->Dout_Status     = (f->data[0] & 0b00000100);
-        s->SD_Present      = (f->data[0] & 0b00001000);
-        s->GPS_PowerStatus = (f->data[0] & 0b00010000);
-        s->Device_ID       = (f->data[0] & 0b11100000);
+        s->Din2_Status     = (f->data[0] & 0b00000010) >> 1;
+        s->Dout_Status     = (f->data[0] & 0b00000100) >> 2;
+        s->SD_Present      = (f->data[0] & 0b00001000) >> 3;
+        s->GPS_PowerStatus = (f->data[0] & 0b00010000) >> 4;
+        s->Device_ID       = (f->data[0] & 0b11100000) >> 5;
         return 0;
 }
 
@@ -391,7 +391,7 @@ nrai_can_unpack_Out_IO(struct nrai_can_ai_read * s, struct can_frame * f)
                 return -1;
 
         s->Dout_Set     = (f->data[0] & 0b00000001);
-        s->GPS_SetPower = (f->data[0] & 0b00000010);
+        s->GPS_SetPower = (f->data[0] & 0b00000010) >> 2;
         return 0;
 }
 
@@ -524,7 +524,7 @@ nrai_can_mkframe_AI2VCU_Steer(  struct nrai_can_ai_write * s, struct can_frame *
         f->len = 2;
 
         tmp = s->STEER_REQUEST;
-        tmp = CLAMP(tmp,-210,210);
+        tmp = BLAMP(tmp,-210,210);
 
         f->data[0] =            (tmp       & 0x00FF);
         f->data[1] = (((uint16_t)tmp >> 8) & 0x00FF);
@@ -542,11 +542,11 @@ nrai_can_mkframe_AI2VCU_Brake(struct nrai_can_ai_write * s, struct can_frame * f
         f->len = 2;
 
         tmp = s->HYD_PRESS_F_REQ_pct;
-        tmp = CLAMP(tmp,0,100);
+        tmp = CLAMP(tmp,0,200);
         f->data[0] = tmp;
 
         tmp = s->HYD_PRESS_R_REQ_pct;
-        tmp = CLAMP(tmp,0,100);
+        tmp = CLAMP(tmp,0,200);
         f->data[1] = tmp;
         return 0;
 }
