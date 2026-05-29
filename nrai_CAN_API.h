@@ -32,7 +32,7 @@
 
 #ifndef  NRAI_FT
 #define  NRAI_FT
-#endif //NRAI)FT
+#endif //NRAI_FT
 
 enum{
         NRAI_CAN_ID_NMT                         = 0,
@@ -84,6 +84,228 @@ enum{
         NRAI_CAN_ID_Out_RTC_TimeFromGPS         = 1622,
         NRAI_CAN_ID_Out_Acc_FastCalibration     = 1623,
         NRAI_CAN_ID_VECTOR__INDEPENDENT_SIG_MSG = 3221225472,
+};
+
+/* VCU_STATUS: SM_SYS */
+enum{
+        SM_SYS_INITIAL_ACTIONS    = 0,
+        SM_SYS_POWER_ON_SELF_TEST = 1,
+        SM_SYS_AUX                = 2,
+        SM_SYS_POWERTRAIN_ENABLE  = 3,
+        SM_SYS_DRIVE_AUTONOMOUS   = 4,
+        SM_SYS_DRIVE_MANUAL       = 5,
+        SM_SYS_CHARGE             = 6,
+        SM_SYS_SHUTDOWN           = 7,
+        SM_SYS_SHUTDOWN_OFF       = 8,
+        SM_SYS_PUSHBAR_MODE       = 9,
+};
+
+/* VCU_STATUS: SM_AS */
+enum{
+        SM_AS_AS_OFF             = 1,
+        SM_AS_AS_READY           = 2,
+        SM_AS_AS_DRIVING         = 3,
+        SM_AS_AS_EMERGENCY_BRAKE = 4,
+        SM_AS_AS_FINISHED        = 5,
+        SM_AS_AS_R2D             = 6,
+};
+
+/* VCU_STATUS: SYS_ACTION_STATE */
+enum{
+        SYS_ACTION_STATE_INITIALISE         = 0,
+        SYS_ACTION_STATE_BATTERY_CHARGING   = 1,
+        SYS_ACTION_STATE_AUTONOMOUS_DRIVING = 2,
+        SYS_ACTION_STATE_MANUAL_DRIVING     = 3,
+};
+
+/* VCU2AI_Brake: STATUS_BRK */
+enum{
+        STATUS_BRK_INITIALISING      = 0,
+        STATUS_BRK_READY             = 1,
+        STATUS_BRK_SHUTTING_DOWN     = 2,
+        STATUS_BRK_SHUTDOWN_COMPLETE = 3,
+        STATUS_BRK_FAULT             = 4,
+};
+
+/* VCU2AI_Brake: STATUS_EBS */
+enum{
+        STATUS_EBS_UNAVAILABLE = 1,
+        STATUS_EBS_ARMED       = 2,
+        STATUS_EBS_TRIGGERED   = 3,
+};
+
+/* VCU2AI_Status: SHUTDOWN_REQUEST */
+enum{
+        SHUTDOWN_REQUEST_NO_SHUTDOWN        = 0,
+        SHUTDOWN_REQUEST_SHUTDOWN_REQUESTED = 1,
+};
+
+/* VCU2AI_Status: AS_SWITCH_STATUS */
+enum{
+        AS_SWITCH_STATUS_OFF = 0,
+        AS_SWITCH_STATUS_ON  = 1,
+};
+
+/* VCU2AI_Status: TS_SWITCH_STATUS */
+enum{
+        TS_SWITCH_STATUS_OFF = 0,
+        TS_SWITCH_STATUS_ON  = 1,
+};
+
+/* VCU2AI_Status: GO_SIGNAL */
+enum{
+        GO_SIGNAL_NO_GO = 0,
+        GO_SIGNAL_GO    = 1,
+};
+/* VCU2AI_Status: STEERING_STATUS */
+enum{
+        STEERING_STATUS_OFF    = 0,
+        STEERING_STATUS_ACTIVE = 1,
+};
+
+/* VCU2AI_Status: AS_STATE*/
+enum{
+        AS_STATE_AS_OFF          = 1,
+        AS_STATE_AS_READY        = 2,
+        AS_STATE_AS_DRIVING      = 3,
+        AS_STATE_EMERGENCY_BRAKE = 4,
+        AS_STATE_AS_FINISHED     = 5,
+};
+
+/* VCU2AI_Status: AMI_STATE */
+enum{
+        AMI_STATE_NOT_SELECTED        = 0,
+        AMI_STATE_ACCELERATION        = 1,
+        AMI_STATE_SKIDPAD             = 2,
+        AMI_STATE_AUTOCROSS           = 3,
+        AMI_STATE_TRACK_DRIVE         = 4,
+        AMI_STATE_STATIC_INSPECTION_A = 5,
+        AMI_STATE_STATIC_INSPECTION_B = 6,
+        AMI_STATE_AUTONOMOUS_DEMO     = 7,
+};
+/* VCU2AI_Status: FAULT_STATUS*/
+enum{
+        FAULT_STATUS_NO_FAULTS      = 0,
+        FAULT_STATUS_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: WARNING_STATUS */
+enum{
+        WARNING_STATUS_NO_WARNING     = 0,
+        WARNING_STATUS_WARNING_ACTIVE = 1,
+};
+
+/* VCU2AI_Status: WARN_BATT_TEMP_HIGH */
+enum{
+        WARN_BATT_TEMP_HIGH_NO_WARNING     = 0,
+        WARN_BATT_TEMP_HIGH_WARNING_ACTIVE = 1,
+};
+
+/* VCU2AI_Status: WARN_BATT_SOC_LOW */
+enum{
+        WARN_BATT_SOC_LOW_NO_WARNING     = 0,
+        WARN_BATT_SOC_LOW_WARNING_ACTIVE = 1,
+};
+
+/* VCU2AI_Status: AI_ESTOP_REQUEST */
+enum{
+        AI_ESTOP_REQUEST_INACTIVE        = 0,
+        AI_ESTOP_REQUEST_ESTOP_REQUESTED = 1,
+};
+
+/* VCU2AI_Status: HVIL_OPEN_FAULT*/
+enum{
+        HVIL_OPEN_FAULT_NO_FAULT       = 0,
+        HVIL_OPEN_FAULT_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: HVIL_SHORT_FAULT*/
+enum{
+        HVIL_SHORT_FAULT_NO_FAULT       = 0,
+        HVIL_SHORT_FAULT_FAULT_DETECTED = 1,
+};
+/* VCU2AI_Status: EBS_FAULT */
+enum{
+        EBS_FAULT_NO_FAULT       = 0,
+        EBS_FAULT_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: OFFBOARD_CHARGER_FAULT */
+enum{
+        OFFBOARD_CHARGER_FAULT_NO_FAULT       = 0,
+        OFFBOARD_CHARGER_FAULT_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: AI_COMMS_LOST */
+enum{
+        AI_COMMS_LOST_NO_FAULT       = 0,
+        AI_COMMS_LOST_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: AUTONOMOUS_BRAKING_FAULT */
+enum{
+        AUTONOMOUS_BRAKING_FAULT_NO_FAULT       = 0,
+        AUTONOMOUS_BRAKING_FAULT_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: MISSION_STATUS_FAULT */
+enum{
+        MISSION_STATUS_FAULT_NO_FAULT       = 0,
+        MISSION_STATUS_FAULT_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: CHARGE_PROCEDURE_FAULT */
+enum{
+        CHARGE_PROCEDURE_FAULT_NO_FAULT       = 0,
+        CHARGE_PROCEDURE_FAULT_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: BMS_FAULT */
+enum{
+        BMS_FAULT_NO_FAULT       = 0,
+        BMS_FAULT_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: BRAKE_PLAUSIBILITY_FAULT */
+enum{
+        BRAKE_PLAUSIBILITY_FAULT_NO_FAULT       = 0,
+        BRAKE_PLAUSIBILITY_FAULT_FAULT_DETECTED = 1,
+};
+
+/* VCU2AI_Status: SHUTDOWN_CAUSE */
+enum{
+        SHUTDOWN_CAUSE_NO_SHUTDOWN                    =  0,
+        SHUTDOWN_CAUSE_AI_COMPUTER_REQUEST            =  1,
+        SHUTDOWN_CAUSE_HVIL_OPEN_CIRCUIT_FAULT        =  2,
+        SHUTDOWN_CAUSE_HVIL_SHORT_CIRCUIT_FAULT       =  3,
+        SHUTDOWN_CAUSE_EBS_FAULT                      =  4,
+        SHUTDOWN_CAUSE_OFFBOARD_BATTERY_CHARGER_FAULT =  5,
+        SHUTDOWN_CAUSE_AI_COMMUNICATIONS_FAULT        =  6,
+        SHUTDOWN_CAUSE_AUTONOMOUS_BRAKING_FAULT       =  7,
+        SHUTDOWN_CAUSE_MISSION_STATUS_FAULT           =  8,
+        SHUTDOWN_CAUSE_CHARGING_PROCEDURE_FAULT       =  9,
+        SHUTDOWN_CAUSE_BMS_FAULT                      = 10,
+        SHUTDOWN_CAUSE_BRAKE_PLAUSIBILITY_FAULT       = 11,
+};
+
+/* AI2VCU_Status: ESTOP_REQUEST */
+enum{
+        ESTOP_REQUEST_NO_ESTOP_REQUESTED = 0,
+        ESTOP_REQUEST_ESTOP_REQUESTED    = 1,
+};
+
+/* AI2VCU_Status: MISSION_STATUS */
+enum{
+        MISSION_STATUS_NOT_SELECTED     = 0,
+        MISSION_STATUS_MISSION_SELECTED = 1,
+        MISSION_STATUS_RUNNING          = 2,
+        MISSION_STATUS_FINISHED         = 3,
+};
+
+/* AI2VCU_Status: DIRECTION_REQUEST */
+enum{
+        DIRECTION_REQUEST_NEUTRAL = 0,
+        DIRECTION_REQUEST_FORWARD = 1,
 };
 
 /* ----------------------- AI_READ_START ----------------------- */
@@ -260,7 +482,7 @@ enum{
 // SG_ Acc_SetCalibTarget_Z : 16|2@1+ (1,0) [0|3] ""  OPUS,LOG,AI
 // SG_ Acc_StartFastCalib : 24|1@1+ (1,0) [0|1] ""  OPUS,LOG,AI
 
-/* unsorted reference struct 
+/* unsorted reference struct
 struct nrai_can_ai_read{
 //1312 VCU2AI_Status: 8 VCU
         uint8_t  HANDSHAKE;                     // 0|1@1-  (1,0) [0|1]
@@ -556,7 +778,7 @@ struct nrai_can_ai_read {
 };
 
 /*
- * The following funcitons ALL unpack the data from the CAN frame corresponding 
+ * The following funcitons ALL unpack the data from the CAN frame corresponding
  * to their name into the nrai_can_ai_read struct.
  * All functions return:
  *      -1 on error

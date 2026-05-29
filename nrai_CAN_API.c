@@ -524,7 +524,7 @@ nrai_can_mkframe_AI2VCU_Steer(  struct nrai_can_ai_write * s, struct can_frame *
         f->len = 2;
 
         tmp = s->STEER_REQUEST;
-        tmp = BLAMP(tmp,-210,210);
+        tmp = CLAMP(tmp,-210,210);
 
         f->data[0] =            (tmp       & 0x00FF);
         f->data[1] = (((uint16_t)tmp >> 8) & 0x00FF);
