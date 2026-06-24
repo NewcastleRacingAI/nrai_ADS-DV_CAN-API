@@ -165,6 +165,7 @@ enum{
 
 /* VCU2AI_Status: AS_STATE*/
 enum{
+        AS_STATE_AS_INIT         = 0,
         AS_STATE_AS_OFF          = 1,
         AS_STATE_AS_READY        = 2,
         AS_STATE_AS_DRIVING      = 3,
